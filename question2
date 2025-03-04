@@ -1,0 +1,43 @@
+function isFibonacci(num) {
+    let a = 0;
+    let b = 1;
+    
+    while (b < num) {
+        const temp = b;
+        b = a + b;
+        a = temp;
+    }
+    
+    return b === num;
+}
+
+function fibonacciSequenceUpTo(num) {
+    const sequence = [0, 1];
+    
+    while (sequence[sequence.length - 1] < num) {
+        const next = sequence[sequence.length - 1] + sequence[sequence.length - 2];
+        sequence.push(next);
+    }
+    
+    return sequence;
+}
+
+function checkNumberInFibonacci() {
+    const input = prompt("Informe um número para verificar se pertence à sequência de Fibonacci:");
+    const number = parseInt(input || "0", 10);
+
+    if (isNaN(number)) {
+        console.log("Por favor, insira um número válido.");
+        return;
+    }
+
+    if (isFibonacci(number)) {
+        console.log(`O número ${number} pertence à sequência de Fibonacci.`);
+    } else {
+        console.log(`O número ${number} não pertence à sequência de Fibonacci.`);
+    }
+
+    console.log(`Sequência de Fibonacci até ${number}:`, fibonacciSequenceUpTo(number));
+}
+
+checkNumberInFibonacci();
