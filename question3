@@ -1,0 +1,40 @@
+function calcularMenorFaturamento(dados) {
+    const valores = dados.filter(dia => dia.valor > 0).map(dia => dia.valor);
+    return Math.min(...valores);
+}
+
+function calcularMaiorFaturamento(dados) {
+    const valores = dados.filter(dia => dia.valor > 0).map(dia => dia.valor);
+    return Math.max(...valores);
+}
+
+function calcularMediaMensal(dados) {
+    const valores = dados.filter(dia => dia.valor > 0).map(dia => dia.valor);
+    const soma = valores.reduce((acc, valor) => acc + valor, 0);
+    return soma / valores.length;
+}
+
+function contarDiasAcimaDaMedia(dados) {
+    const media = calcularMediaMensal(dados);
+    return dados.filter(dia => dia.valor > media).length;
+}
+
+fetch('dados.json')
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Erro ao carregar o arquivo JSON');
+        }
+        return response.json();
+    })
+    .then(dados => {
+        const menorFaturamento = calcularMenorFaturamento(dados);
+        const maiorFaturamento = calcularMaiorFaturamento(dados);
+        const diasAcimaDaMedia = contarDiasAcimaDaMedia(dados);
+
+        console.log(`Menor valor de faturamento: ${menorFaturamento}`);
+        console.log(`Maior valor de faturamento: ${maiorFaturamento}`);
+        console.log(`Número de dias com faturamento acima da média: ${diasAcimaDaMedia}`);
+    })
+    .catch(error => {
+        console.error('Erro:', error.message);
+    });
